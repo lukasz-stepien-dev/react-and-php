@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddTask() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
   e.preventDefault();
@@ -23,7 +25,7 @@ export default function AddTask() {
     body: JSON.stringify(task),
   })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => navigate('/tasks'))
     .catch((error) => {
       console.error('Error:', error);
     });
