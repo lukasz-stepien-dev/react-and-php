@@ -6,8 +6,9 @@ include_once '../../classes/Database.php';
 
 $database = new Database();
 $db = $database->getConnection();
+$user_id = $_GET['userId'];
 
-$query = "SELECT * FROM tasks";
+$query = "SELECT * FROM tasks WHERE user_id = $user_id ORDER BY due_date DESC";
 $stmt = $db->prepare($query);
 $stmt->execute();
 

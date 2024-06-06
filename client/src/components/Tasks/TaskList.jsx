@@ -7,23 +7,43 @@ export default function TaskList() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/task/read.php')
-      .then(response => response.json())
-      .then(data => setTasks(data.records))
-      .catch(error => console.error('Error:', error));
-  }, []);
+  const userId = localStorage.getItem('userId');
+  fetch(`http://localhost:8000/api/task/read.php?userId=${userId}`)
+    .then(response => response.json())
+    .then(data => setTasks(data.records))
+    .catch(error => console.error('Error:', error));
+}, []);
 
   const handleAddTask = () => {
     navigate('/add-task');
   };
 
+  let taskItems = [];
+  if (Array.isArray(tasks)) {
+    for (let i = 0; i < tasks.length; i++) {
+      taskItems.push(<TaskItem key={tasks[i].id} task={tasks[i]} />);
+    }
+  }
+
+
   return (
-    <div>
-      <h1>Task List</h1>
-      <button onClick={handleAddTask}>Add Task</button>
-      {Array.isArray(tasks) && tasks.map(task => (
-        <TaskItem key={task.id} task={task} />
-      ))}
-    </div>
-  );
+  <div>
+    <h1>Task List</h1>
+    <button onClick={handleAddTask}>Add Task</button>
+    <table style={{tableLayout: 'fixed', width: '100%'}}>
+      <thead>
+        <tr>
+          <th style={{width: '25%'}}>Title</th>
+          <th style={{width: '25%'}}>Description</th>
+          <th style={{width: '25%'}}>Due Date</th>
+          <th style={{width: '25%'}}>Status</th>
+          <th style={{width: '25%'}}>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+          {taskItems}
+      </tbody>
+    </table>
+  </div>
+);
 }
