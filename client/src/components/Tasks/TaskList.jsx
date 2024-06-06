@@ -18,6 +18,13 @@ export default function TaskList() {
     navigate('/add-task');
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+
+    navigate('/login');
+  };
+
   let taskItems = [];
   if (Array.isArray(tasks)) {
     for (let i = 0; i < tasks.length; i++) {
@@ -27,23 +34,24 @@ export default function TaskList() {
 
 
   return (
-  <div>
-    <h1>Task List</h1>
-    <button onClick={handleAddTask}>Add Task</button>
-    <table style={{tableLayout: 'fixed', width: '100%'}}>
-      <thead>
-        <tr>
-          <th style={{width: '25%'}}>Title</th>
-          <th style={{width: '25%'}}>Description</th>
-          <th style={{width: '25%'}}>Due Date</th>
-          <th style={{width: '25%'}}>Status</th>
-          <th style={{width: '25%'}}>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
+      <div>
+        <h1>Task List</h1>
+        <button onClick={handleAddTask}>Add Task</button>
+        <button onClick={handleLogout}>Logout</button>
+        <table style={{tableLayout: 'fixed', width: '100%'}}>
+          <thead>
+          <tr>
+            <th style={{width: '25%'}}>Title</th>
+            <th style={{width: '25%'}}>Description</th>
+            <th style={{width: '25%'}}>Due Date</th>
+            <th style={{width: '25%'}}>Status</th>
+            <th style={{width: '25%'}}>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
           {taskItems}
-      </tbody>
-    </table>
-  </div>
-);
+          </tbody>
+        </table>
+      </div>
+  );
 }
