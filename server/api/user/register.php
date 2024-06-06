@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($result) {
           $token = bin2hex(openssl_random_pseudo_bytes(16));
-          echo json_encode(['success' => true, 'token' => $token]);
+          $userId = $user->getId();
+          echo json_encode(['success' => true, 'token' => $token, 'userId' => $userId]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Registration failed.']);
         }

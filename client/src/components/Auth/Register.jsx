@@ -34,6 +34,7 @@ export default function Register() {
   .then((data) => {
     if (data.success) {
       localStorage.setItem('token', data.token);
+      localStorage.setItem('userId', data.userId);
       navigate('/tasks');
     } else {
       console.error(data.message);

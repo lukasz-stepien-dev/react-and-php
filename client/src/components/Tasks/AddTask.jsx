@@ -6,27 +6,28 @@ export default function AddTask() {
   const [dueDate, setDueDate] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const task = {
-      title,
-      description,
-      due_date: dueDate,
-    };
-
-    fetch('http://localhost:8000/api/task/create.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(task),
-    })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+  const task = {
+    title,
+    description,
+    due_date: dueDate,
+    user_id: localStorage.getItem('userId'),
   };
+
+  fetch('http://localhost:8000/api/task/create.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(task),
+  })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+};
 
   return (
     <div>
