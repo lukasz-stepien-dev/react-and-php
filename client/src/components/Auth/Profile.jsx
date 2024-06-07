@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 const Profile = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -20,17 +23,17 @@ const Profile = () => {
   }, []);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <Box>Loading...</Box>;
   }
 
   return (
-    <div>
-      <h1>Profile</h1>
-      <p>First Name: {userData.firstName}</p>
-      <p>Last Name: {userData.lastName}</p>
-      <p>Email: {userData.email}</p>
-        <button onClick={() => navigate('/tasks')}>Go back</button>
-    </div>
+    <Box>
+      <Typography variant="h4">Profile</Typography>
+      <Typography variant="body1">First Name: {userData.firstName}</Typography>
+      <Typography variant="body1">Last Name: {userData.lastName}</Typography>
+      <Typography variant="body1">Email: {userData.email}</Typography>
+      <Button variant="contained" color="primary" onClick={() => navigate('/tasks')}>Go back</Button>
+    </Box>
   );
 };
 

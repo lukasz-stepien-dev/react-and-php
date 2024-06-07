@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import TableCell from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
 export default function TaskItem({ task }) {
   const navigate = useNavigate();
@@ -55,16 +58,16 @@ export default function TaskItem({ task }) {
   };
 
   return (
-    <tr>
-      <td>{task.title}</td>
-      <td>{task.description}</td>
-      <td>{task.due_date}</td>
-      <td>{task.status}</td>
-      <td>
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleMarkAsCompleted}>Mark as Completed</button>
-        <button onClick={handleDelete}>Delete</button>
-      </td>
-    </tr>
+      <TableRow>
+        <TableCell>{task.title}</TableCell>
+        <TableCell>{task.description}</TableCell>
+        <TableCell>{task.due_date}</TableCell>
+        <TableCell>{task.status}</TableCell>
+        <TableCell>
+          <Button variant="contained" color="primary" onClick={handleEdit}>Edit</Button>
+          <Button variant="contained" color="primary" onClick={handleMarkAsCompleted}>Mark as Completed</Button>
+          <Button variant="contained" color="primary" onClick={handleDelete}>Delete</Button>
+        </TableCell>
+      </TableRow>
   );
 }

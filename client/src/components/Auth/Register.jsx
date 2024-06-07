@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -47,31 +51,26 @@ export default function Register() {
 };
 
   return (
-    <div>
+    <Box>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          First Name:
-          <input type="text" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
-        </label>
-        <br/>
-        <label>
-          Last Name:
-          <input type="text" value={lastName} onChange={e => setLastName(e.target.value)} required/>
-        </label>
-        <br/>
-        <label>
-          Email:
-          <input type="email" value={email} onChange={e => setEmail(e.target.value)} required/>
-        </label>
-        <br/>
-        <label>
-          Password:
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} required/>
-        </label>
-        <br/>
-        <button type="submit">Register</button>
+        <FormControl fullWidth margin="normal">
+          <TextField label="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required/>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <TextField label="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required/>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <TextField label="Email" value={email} onChange={e => setEmail(e.target.value)} required/>
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <TextField label="Password" value={password} onChange={e => setPassword(e.target.value)} type="password" required/>
+        </FormControl>
+        <Box display="flex" justifyContent="space-between" marginTop="16px">
+          <Button variant="contained" color="primary" type="submit">Register</Button>
+          <Button variant="contained" color="secondary" onClick={() => navigate('/login')}>Login</Button>
+        </Box>
       </form>
-      <button onClick={() => navigate('/login')}>Login</button>
-    </div>
+    </Box>
   );
 }

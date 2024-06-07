@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TaskItem from './TaskItem';
+import Button from '@mui/material/Button';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
@@ -55,29 +63,31 @@ export default function TaskList() {
     }
   }
 
-  return (
-    <div>
-      <h1>Task List</h1>
-      <button onClick={handleAddTask}>Add Task</button>
-      <button onClick={handleProfile}>Profile</button>
-      <button onClick={handleLogout}>Logout</button>
-      <button onClick={() => handleFilterByStatus('completed')}>Show only Completed</button>
-      <button onClick={() => handleFilterByStatus('not_completed')}>Show only Not Completed</button>
-      <button onClick={handleFilterByDueDate}>Filter by Due Date</button>
-      <table style={{tableLayout: 'fixed', width: '100%'}}>
-        <thead>
-        <tr>
-          <th style={{width: '25%'}}>Title</th>
-          <th style={{width: '25%'}}>Description</th>
-          <th style={{width: '25%'}}>Due Date</th>
-          <th style={{width: '25%'}}>Status</th>
-          <th style={{width: '25%'}}>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {taskItems}
-        </tbody>
-      </table>
-    </div>
-  );
+    return (
+        <div>
+            <h1>Task List</h1>
+            <Button variant="contained" color="primary" onClick={handleAddTask}>Add Task</Button>
+            <Button variant="contained" color="primary" onClick={handleProfile}>Profile</Button>
+            <Button variant="contained" color="primary" onClick={handleLogout}>Logout</Button>
+            <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('completed')}>Show only Completed</Button>
+            <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('not_completed')}>Show only Not Completed</Button>
+            <Button variant="contained" color="primary" onClick={handleFilterByDueDate}>Filter by Due Date</Button>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Title</TableCell>
+                            <TableCell>Description</TableCell>
+                            <TableCell>Due Date</TableCell>
+                            <TableCell>Status</TableCell>
+                            <TableCell>Actions</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {taskItems}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
+    );
 }
