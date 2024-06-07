@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 export default function TaskList() {
   const [tasks, setTasks] = useState([]);
   const [filterStatus, setFilterStatus] = useState(null);
-  const [sortOrder, setSortOrder] = useState('desc'); // Add this line
+  const [sortOrder, setSortOrder] = useState('desc');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,10 +50,15 @@ export default function TaskList() {
   };
 
   const handleFilterByDueDate = () => {
-    setSortOrder(prevSortOrder => prevSortOrder === 'desc' ? 'asc' : 'desc'); // Toggle the sortOrder
+    setSortOrder(prevSortOrder => prevSortOrder === 'desc' ? 'asc' : 'desc');
     setTasks(prevTasks => {
       return [...prevTasks].sort((a, b) => sortOrder === 'desc' ? new Date(b.due_date) - new Date(a.due_date) : new Date(a.due_date) - new Date(b.due_date));
     });
+  };
+
+  const handleResetFilters = () => {
+    setFilterStatus(null);
+    setSortOrder('desc');
   };
 
   let taskItems = [];
@@ -63,31 +68,32 @@ export default function TaskList() {
     }
   }
 
-    return (
-        <div>
-            <h1>Task List</h1>
-            <Button variant="contained" color="primary" onClick={handleAddTask}>Add Task</Button>
-            <Button variant="contained" color="primary" onClick={handleProfile}>Profile</Button>
-            <Button variant="contained" color="primary" onClick={handleLogout}>Logout</Button>
-            <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('completed')}>Show only Completed</Button>
-            <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('not_completed')}>Show only Not Completed</Button>
-            <Button variant="contained" color="primary" onClick={handleFilterByDueDate}>Filter by Due Date</Button>
-            <TableContainer component={Paper}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Due Date</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Actions</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {taskItems}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
-    );
+  return (
+    <div>
+      <h1>Task List</h1>
+      <Button variant="contained" color="primary" onClick={handleAddTask}>Add Task</Button>
+      <Button variant="contained" color="primary" onClick={handleProfile}>Profile</Button>
+      <Button variant="contained" color="primary" onClick={handleLogout}>Logout</Button>
+      <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('completed')}>Show only Completed</Button>
+      <Button variant="contained" color="primary" onClick={() => handleFilterByStatus('not_completed')}>Show only Not Completed</Button>
+      <Button variant="contained" color="primary" onClick={handleFilterByDueDate}>Filter by Due Date</Button>
+      <Button variant="contained" color="primary" onClick={handleResetFilters}>Reset Filters</Button>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Title</TableCell>
+              <TableCell>Description</TableCell>
+              <TableCell>Due Date</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {taskItems}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 }
