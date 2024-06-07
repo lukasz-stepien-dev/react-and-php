@@ -28,7 +28,24 @@ export default function TaskItem({ task }) {
   };
 
   const handleDelete = () => {
-    // Delete logic here
+    fetch(`http://localhost:8000/api/task/delete.php`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: task.id,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.reload();
+      } else {
+        console.error('Failed to delete task:', data.message);
+      }
+    })
+    .catch(error => console.error('Error:', error));
   };
 
   return (

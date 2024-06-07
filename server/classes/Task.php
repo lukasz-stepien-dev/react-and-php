@@ -53,5 +53,18 @@ class Task {
 
         return false;
     }
+
+    public function delete($id): bool
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 }
 ?>
