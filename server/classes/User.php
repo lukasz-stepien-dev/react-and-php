@@ -11,7 +11,8 @@ class User {
         $this->db = (new Database())->getConnection();
     }
 
-    public function register($firstName, $lastName, $email, $password) {
+    public function register($firstName, $lastName, $email, $password): bool
+    {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         $query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)';
@@ -58,6 +59,18 @@ class User {
 
     public function getToken() {
         return $this->token;
+    }
+
+    public function getUserDataFromId($id) {
+        $query = 'SELECT * FROM users WHERE id = ? LIMIT 1';
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return false;
     }
 }
 ?>
