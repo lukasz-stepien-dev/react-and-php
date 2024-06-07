@@ -52,6 +52,7 @@ export default function AddTask() {
         </label>
         <br/>
         <button type="submit">Add Task</button>
+        <button type="button" onClick={() => navigate('/tasks')}>Cancel</button>
       </form>
     </div>
   );

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 export default function EditTask() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [task, setTask] = useState({ title: '', description: '', due_date: '' });
+  const [task, setTask] = useState({ title: '', description: '', due_date: '', status: '' });
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/task/read_single.php?id=${id}`)
@@ -43,17 +43,25 @@ export default function EditTask() {
       <form onSubmit={handleSubmit}>
         <label>
           Title:
-          <input type="text" name="title" value={task.title} onChange={handleChange} required />
+          <input type="text" name="title" value={task.title} onChange={handleChange} required/>
         </label>
         <label>
           Description:
-          <textarea name="description" value={task.description} onChange={handleChange} required />
+          <textarea name="description" value={task.description} onChange={handleChange} required/>
         </label>
         <label>
           Due Date:
-          <input type="date" name="due_date" value={task.due_date} onChange={handleChange} required />
+          <input type="date" name="due_date" value={task.due_date} onChange={handleChange} required/>
+        </label>
+        <label>
+          Status:
+          <select name="status" value={task.status} onChange={handleChange} required>
+            <option value="not_completed">Not Completed</option>
+            <option value="completed">Completed</option>
+          </select>
         </label>
         <button type="submit">Update Task</button>
+        <button type="button" onClick={() => navigate('/tasks')}>Cancel</button>
       </form>
     </div>
   );
