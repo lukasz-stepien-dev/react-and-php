@@ -8,7 +8,34 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle login logic here
+
+    const formData = new FormData();
+
+    formData.append('email', email);
+    formData.append('password', password);
+
+    fetch('http://localhost:8000/api/user/login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('userId', data.userId);
+          navigate('/tasks');
+          window.location.reload();
+        } else {
+          console.error('Login failed:', data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
   };
 
   return (

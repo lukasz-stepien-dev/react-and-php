@@ -36,6 +36,7 @@ export default function Register() {
       localStorage.setItem('token', data.token);
       localStorage.setItem('userId', data.userId);
       navigate('/tasks');
+      window.location.reload();
     } else {
       console.error(data.message);
     }
