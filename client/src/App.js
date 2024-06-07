@@ -4,6 +4,7 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import TaskList from './components/Tasks/TaskList';
 import AddTask from './components/Tasks/AddTask';
+import EditTask from './components/Tasks/EditTask';
 
 function Navigation() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -24,6 +25,7 @@ function Navigation() {
       <Route path="/register" element={<Register />} />
       <Route path="/tasks" element={isLoggedIn ? <TaskList /> : <Login />} />
         <Route path="/add-task" element={isLoggedIn ? <AddTask /> : <Login />} />
+      <Route path="/edit/:id" element={isLoggedIn ? <EditTask /> : <Login />} />
     </Routes>
   );
 }

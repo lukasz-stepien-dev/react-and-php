@@ -16,39 +16,35 @@ class Task {
 
     public function create(): bool
     {
-      $query = "INSERT INTO " . $this->table_name . " SET title=:title, description=:description, due_date=:due_date, user_id=:user_id";
+        $query = "INSERT INTO " . $this->table_name . " SET title = :title, description = :description, due_date = :due_date, status = :status, user_id = :user_id";
+        $stmt = $this->db->prepare($query);
 
-      $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':due_date', $this->due_date);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':user_id', $this->user_id);
 
-      $stmt->bindParam(':title', $this->title);
-      $stmt->bindParam(':description', $this->description);
-      $stmt->bindParam(':due_date', $this->due_date);
-      $stmt->bindParam(':user_id', $this->user_id);
+        if ($stmt->execute()) {
+            return true;
+        }
 
-      if ($stmt->execute()) {
-        return true;
-      }
-
-      return false;
+        return false;
     }
 
-    public function markAsCompleted(): bool
+    public function update(): bool
     {
-        $query = "SELECT status FROM " . $this->table_name . " WHERE id = :id";
+        $query = "UPDATE " . $this->table_name . " SET title = :title, description = :description, due_date = :due_date, status = :status WHERE id = :id";
         $stmt = $this->db->prepare($query);
+
         $stmt->bindParam(':id', $this->id);
-        $stmt->execute();
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':due_date', $this->due_date);
+        $stmt->bindParam(':status', $this->status);
 
-        if ($row['status'] !== 'completed') {
-            $query = "UPDATE " . $this->table_name . " SET status = :status WHERE id = :id";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindParam(':id', $this->id);
-            $stmt->bindParam(':status', $this->status);
-
-            if ($stmt->execute()) {
-                return true;
-            }
+        if ($stmt->execute()) {
+            return true;
         }
 
         return false;
@@ -62,6 +58,22 @@ class Task {
 
         if ($stmt->execute()) {
             return true;
+        }
+
+        return false;
+    }
+
+    public function read_single($id)
+    {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            return $row;
         }
 
         return false;

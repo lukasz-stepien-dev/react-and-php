@@ -14,11 +14,14 @@ $task = new Task($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (!empty($data->id) && !empty($data->status)) {
+if (!empty($data->id) && !empty($data->title) && !empty($data->description) && !empty($data->due_date) && !empty($data->status)) {
     $task->id = $data->id;
+    $task->title = $data->title;
+    $task->description = $data->description;
+    $task->due_date = $data->due_date;
     $task->status = $data->status;
 
-    if ($task->markAsCompleted()) {
+    if ($task->update()) {
         echo json_encode(
             array('message' => 'Task Updated', 'success' => true)
         );

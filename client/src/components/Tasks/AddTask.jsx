@@ -14,6 +14,7 @@ export default function AddTask() {
     title,
     description,
     due_date: dueDate,
+    status: 'not_completed',
     user_id: localStorage.getItem('userId'),
   };
 

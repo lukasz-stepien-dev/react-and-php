@@ -1,8 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function TaskItem({ task }) {
+  const navigate = useNavigate();
+
   const handleEdit = () => {
-    // Edit logic here
+    navigate(`/edit/${task.id}`);
   };
 
   const handleMarkAsCompleted = () => {
@@ -13,6 +16,9 @@ export default function TaskItem({ task }) {
       },
       body: JSON.stringify({
         id: task.id,
+        title: task.title,
+        description: task.description,
+        due_date: task.due_date,
         status: 'completed',
       }),
     })
